@@ -1,36 +1,45 @@
 import React,{useState} from "react";
 import { StyleSheet, View, Image, Text, ScrollView, Pressable } from 'react-native'
 
-const Product_detail = () => {
+const Product_detail = (props) => {
+    const {navigation,route} = props
+    const value = route.params.productdata.price
     const [counter,setcounter] = useState(1);
-    const [totalvalue,settotalvalue] = useState(100);
+    const [totalvalue,settotalvalue] = useState(value);
     return (
         <ScrollView>
             <View style={styles.bg}>
 
                 <View style={styles.box} >
-                    <Image style={styles.img} source={{ uri: 'https://freepngimg.com/download/flower/144570-fresh-pot-flower-free-clipart-hq.png' }}>
+                    <Image style={styles.img} source={{ uri: route.params.productdata.url }}>
                     </Image>
 
                 </View>
 
                 <View style={styles.box2} >
-                    <Text style={styles.title}>  Flower Pot
+                    <Text style={styles.title}>  {route.params.productdata.name}
                     </Text>
 
                     <Text style={styles.desc}>  Description :
                     </Text>
 
 
-                    <Text style={{ fontSize: 17, fontWeight: 500, color: '#E4E4E4', margin: 10, textAlign: 'justify' }}> A flower pot is a vessel designed to hold and nurture plants, such as flowers, herbs, or shrubs. Available in a variety of materials, including ceramic, terracotta, plastic, metal, and wood, flower pots come in various shapes and sizes to suit different plant types and aesthetic preferences. They often feature drainage holes to prevent waterlogging.</Text>
+                    <Text style={{ fontSize: 17, fontWeight: 500, color: '#808080', margin: 10, textAlign: 'justify' }}> A flower pot is a vessel designed to hold and nurture plants, such as flowers, herbs, or shrubs. Available in a variety of materials, including ceramic, terracotta, plastic, metal, and wood, flower pots come in various shapes and sizes to suit different plant types and aesthetic preferences. They often feature drainage holes to prevent waterlogging.</Text>
                 </View>
 
 
                 <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                     <View style={styles.total}>
                         <Pressable style={styles.caclc} onPress={ () => {
-                            setcounter( counter + 1);
-                            settotalvalue(totalvalue * counter);
+                            if(counter<=0){
+                                setcounter(counter * 0)
+                            }
+                                setcounter( counter + 1);
+                                settotalvalue(totalvalue * counter);
+                            
+
+
+                            
                         }}>
                             <Text style={{ fontSize: 40, fontWeight: 900, color: 'white', alignSelf: 'center' }}> +
                             </Text>
@@ -52,8 +61,12 @@ const Product_detail = () => {
                         </View>
 
                         <Pressable style={styles.caclc} onPress={ () => {
-                            setcounter(counter-1);
-                            settotalvalue(totalvalue * counter);
+                            if(counter<=0){
+                                setcounter(counter * 0)
+                            }
+                                setcounter( counter - 1);
+                                settotalvalue(totalvalue * counter);
+                            
                         }}>
                             <Text style={{ fontSize: 40, fontWeight: 900, color: 'white', alignSelf: 'center' }}> -
                             </Text>
@@ -68,7 +81,8 @@ const Product_detail = () => {
 
                         <Text style={{ fontSize: 35, fontWeight: 700, color: '#3E6145', alignSelf: 'center', marginTop: 25 }}> ₹ <Text style={{ fontSize: 35, fontWeight: 700, color: '#3E6145', alignSelf: 'center', marginTop: 25 }}>
                            {totalvalue}
-                        </Text></Text>
+                        </Text> 
+                        </Text>
 
                     </View>
 
@@ -112,6 +126,7 @@ const styles = StyleSheet.create({
         color: 'black',
         marginTop: 10,
         // marginLeft: 10,
+        color:'#3E6145'
 
     },
     total: {
@@ -137,27 +152,30 @@ const styles = StyleSheet.create({
 
     },
     box: {
-        backgroundColor: '#BBD7C7',
+        backgroundColor: '#3E6145',
         height: 300,
         // width:400,
         margin: 5,
-        borderBottomLeftRadius: 12,
-        borderBottomRightRadius: 12,
+        borderRadius:12,
+        justifyContent:'center'
         // justifyContent:'center'
 
     },
     box2: {
-        backgroundColor: '#72A38F',
         borderRadius: 12,
         margin: 5,
-        padding: 10
+        padding: 10,
+        borderWidth:2,
+        borderColor:'#3E6145'
     },
     img: {
-        height: 260,
-        width: 250,
-        margin: 20,
+        height: 290,
+        width: 375,
+        // margin: 20,
+        alignSelf:'center',
         resizeMode: 'contain',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        borderRadius:12
 
     },
     payment: {
